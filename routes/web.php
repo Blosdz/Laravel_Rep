@@ -23,9 +23,9 @@ Route::get('/usuario/pruebas','App\Http\Controllers\UserController@pruebas');
 
 //rutas del api
 //get conseguir recursos etc / post guardar datos , recursos o recibir logica desde un formulario
-//Put actualizar datos o recursos / Delete para eliminar datos o recursos 
+//Put actualizar datos o recursos en el backend/ Delete para eliminar datos o recursos 
 
 Route::post('/api/registro','App\Http\Controllers\UserController@register');
 Route::post('/api/login','App\Http\Controllers\UserController@login');
-Route::post('/api/user/update','App\Http\Controllers\UserController@update');
+Route::put('/api/user/update','App\Http\Controllers\UserController@update');
 

@@ -116,15 +116,52 @@ class UserController extends Controller{
     }
     
     public function update(Request $request){
+        //comprobar si esta identificado
         $token=$request->header('Authorization');
-        $jwdtAuth= new \App\helpers\JwdtAuth();
+        $jwdtAuth= new \App\helpers\JwdtAuth(); 
+
+
+        //recoger los datos por post 
+        //actualizar el usuario
+        $json=$request->input('json',null);
+        $params_array=\json_decode($json,true);
         $checktoken=$jwdtAuth->checkToken($token);
-        if($checktoken){
-            echo"<h1>login correcto</h1>";
+        if($checktoken && !empty($params_array)){
+         
+            //sacar usuario identificado
+            $user=$jwdtAuth->checkToken($token,true);
+            //validar datos
+            $validate=\Validator::make($params_array,[
+                'name'=>'required|alpha',
+                'surname'=>'required|alpha',
+                'email'=>'required|email|unique:users'.$user->sub
+            ]);
+
+            //quitar los campos que no quiero actualizar
+            unset($params_array['id']);
+            unset($params_array['role']);
+            unset($params_array['password']);
+            unset($params_array['created_at']);
+            unset($params_array['remember_token']);
+            //actualizard usuario en bbdd            
+            $user_update=User::where('id',$user->sub)->update($params_array);
+            //devolver array con resultado
+            $data=array(
+                'code'=>200,
+                'status'=>'succes',
+                'user'=>$user,
+                'changes'=>$params_array
+            );
+ 
+
         }
         else{
-            echo"<h1>Login incorrecto</h1>";
+            $data=array(
+                'code'=>400,
+                'status'=>'error',
+                'message'=>'el usuario no esta identificado'
+            );
         }
-        die();
+        return response()->json($data,$data['code']);
     }
 }
