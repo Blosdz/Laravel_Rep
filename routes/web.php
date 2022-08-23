@@ -28,4 +28,5 @@ Route::get('/usuario/pruebas','App\Http\Controllers\UserController@pruebas');
 Route::post('/api/registro','App\Http\Controllers\UserController@register');
 Route::post('/api/login','App\Http\Controllers\UserController@login');
 Route::put('/api/user/update','App\Http\Controllers\UserController@update');
+Route::post('/api/user/upload','App\Http\Controllers\UserController@upload');
 
