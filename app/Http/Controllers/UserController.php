@@ -171,6 +171,6 @@ class UserController extends Controller{
                 'status'=>'error',
                 'message'=>'el usuario no esta identificado'
         );
-        return response($data,$data['code'])->header('Content-Type','text/plain');
+        return response()->json('Content-Type','text/plain');
     }
 }
