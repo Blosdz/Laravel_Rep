@@ -166,11 +166,33 @@ class UserController extends Controller{
     }
     
     public function upload(Request $request){
+        //recoger datos de la peticion 
+        $image=$request->file('file0');
+
+        //guardar imagen
+        if($image){
+            $image_name=time().$image->getClientOriginalName();
+            \Storage::disk('users')->put($image_name,\File::get($image)/*te consige el fichero y te lo guarda con el metodo put */);//cada disco es una carpeta
+            $data=array(
+                'code'=>200,
+                'status'=>'completed charge',
+                'message'=>'succes'
+            );
+        }else{
+            $data=array(
+                'code'=>400,
+                'status'=>'error',
+                'message'=>'el usuario no esta identificado'
+            );
+        }
+            
+        //Devolver el resultado
         $data=array(
                 'code'=>400,
                 'status'=>'error',
                 'message'=>'el usuario no esta identificado'
         );
-        return response()->json('Content-Type','text/plain');
+        return response()->json($data,$data['code']);
     }
+    
 }
