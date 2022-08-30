@@ -157,7 +157,7 @@ class UserController extends Controller{
         }
         else{
             $data=array(
-                'code'=>400,
+                'code'=>402,
                 'status'=>'error',
                 'message'=>'el usuario no esta identificado'
             );
@@ -169,8 +169,19 @@ class UserController extends Controller{
         //recoger datos de la peticion 
         $image=$request->file('file0');
 
+        // validacion de imagen
+        $validate=\Validator::make($request->all(),[
+            'file0' => 'required|image|mimes:jpg,jpeg,png,gif'
+        ]); //validacion hecha
+
         //guardar imagen
-        if($image){
+        if(!$image || $validate->fails()){
+            $data=array(
+                'code'=>400,
+                'status'=>'error',
+                'message'=>'el usuario no subio la imagen',
+            );
+        }else{
             $image_name=time().$image->getClientOriginalName();
             \Storage::disk('users')->put($image_name,\File::get($image)/*te consige el fichero y te lo guarda con el metodo put */);//cada disco es una carpeta
             $data=array(
@@ -178,20 +189,8 @@ class UserController extends Controller{
                 'status'=>'completed charge',
                 'message'=>'succes'
             );
-        }else{
-            $data=array(
-                'code'=>400,
-                'status'=>'error',
-                'message'=>'el usuario no esta identificado'
-            );
         }
             
-        //Devolver el resultado
-        $data=array(
-                'code'=>400,
-                'status'=>'error',
-                'message'=>'el usuario no esta identificado'
-        );
         return response()->json($data,$data['code']);
     }
     

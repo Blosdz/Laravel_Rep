@@ -14,19 +14,19 @@ class ApiAuthMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {        //comprobar si esta identificado
         $token=$request->header('Authorization');
-        $jwdtAuth= new \App\helpers\JwdtAuth(); 
+        $jwdtAuth= new \JwdtAuth(); 
         $checktoken=$jwdtAuth->checkToken($token);
 
-        if($checktoken && !empty($params_array)){
+        if($checktoken){
             return $next($request);
         }else{
             $data=array(
                 'code'=>400,
                 'status'=>'error',
-                'message'=>'error al subir la imagen'
+                'message'=>'error de middleware'
             );
             return response()->json($data,$data['code']);
         }
