@@ -34,4 +34,5 @@ Route::put('/api/user/update','App\Http\Controllers\UserController@update');
 
 Route::post('/api/user/upload','App\Http\Controllers\UserController@upload')->middleware(\App\Http\Middleware\ApiAuthMiddleware::class);//
 
+Route::get('/api/user/avatar/{filename}'/*filename es unparametro obligatorio */,'App\Http\Controllers\UserController@getImage'); //metodo publico, sin middleware
 
