@@ -211,4 +211,22 @@ class UserController extends Controller{
             return response()->json($data,$data['code']);
         }
     }
+     
+    public function detail($id){
+        $user = User::find($id);
+        if(is_object($user)){
+            $data = array(
+                'code' => 200,
+                'Status'=>'success',
+                'user'=>$user
+            );
+        }else{
+            $data=array(
+                'code'=>400,
+                'status'=>'notexist',
+                'message'=>'el usuario no existe'
+            );         
+        }
+        return response()->json($data,$data['code']);
+    }
 }

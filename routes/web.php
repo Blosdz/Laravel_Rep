@@ -36,3 +36,7 @@ Route::post('/api/user/upload','App\Http\Controllers\UserController@upload')->mi
 
 Route::get('/api/user/avatar/{filename}'/*filename es unparametro obligatorio */,'App\Http\Controllers\UserController@getImage'); //metodo publico, sin middleware
 
+Route::get('/api/user/detail/{id}','App\Http\Controllers\UserController@detail');
+
+//rutas del controlador de categorias ..de manera automatica elige el metodo en el controllador
+Route::resource('/api/category','App\Http\Controllers\CategoryController');
