@@ -80,4 +80,17 @@ class CategoryController extends Controller
         //devolver resultados
         return response()->json($data,$data['code']);
     }
+
+    public function update($id,Request $request){
+        //recoger datos por post
+
+        //validar los datos
+
+        //quitar lo que no quiero actualizar
+
+        //actualizar el registro (categoria)
+        
+        //devolver respuesta
+        
+    }
 }
