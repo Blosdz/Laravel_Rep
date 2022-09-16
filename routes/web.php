@@ -40,3 +40,8 @@ Route::get('/api/user/detail/{id}','App\Http\Controllers\UserController@detail')
 
 //rutas del controlador de categorias ..de manera automatica elige el metodo en el controllador
 Route::resource('/api/category','App\Http\Controllers\CategoryController');
+
+//rutas del controlador resource
+
+
+Route::resource('/api/post','App\Http\Controllers\PostController');

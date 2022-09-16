@@ -81,7 +81,7 @@ class CategoryController extends Controller
         return response()->json($data,$data['code']);
     }
     
-    
+
     public function update($id, Request $request){
         //recoger datos por post 
         $json=$request->input('json',null);
@@ -90,7 +90,7 @@ class CategoryController extends Controller
         if(!empty($params_array)){
 
         //validar datos
-            $validate=Validator::make($params_array,[
+            $validate=\Validator::make($params_array,[
                 'name' => 'required'
             ]);
 
@@ -100,7 +100,7 @@ class CategoryController extends Controller
         //actualizar el registro (categoria)
             $category=Category::where('id',$id)->update($params_array);
             $data=[
-                'status'=>200,
+                'code'=>200,
                 'status'=>'updated',
                 'categoory'=>$params_array
             ];
